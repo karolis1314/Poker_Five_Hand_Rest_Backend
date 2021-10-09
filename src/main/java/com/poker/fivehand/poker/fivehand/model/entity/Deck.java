@@ -21,9 +21,6 @@ public class Deck implements Serializable {
     private long id;
 
     @Column(name = "deckId")
-    private int deck_id;
+    private String deck_id;
 
-    @OneToMany(mappedBy = "deck", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Card> cards;
 }

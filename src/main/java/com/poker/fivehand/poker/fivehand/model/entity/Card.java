@@ -31,8 +31,5 @@ public class Card implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "deck_id", nullable = false)
-    private Deck deck;
 
 }
