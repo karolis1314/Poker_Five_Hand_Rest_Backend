@@ -23,4 +23,7 @@ public class Deck implements Serializable {
     @Column(name = "deckId")
     private String deck_id;
 
+    @Column(name = "remaining")
+    private int remaining;
+
 }

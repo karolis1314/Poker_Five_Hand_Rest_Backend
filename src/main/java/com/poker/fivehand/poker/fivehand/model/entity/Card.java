@@ -31,5 +31,4 @@ public class Card implements Serializable {
     @Column(name = "code")
     private String code;
 
-
 }

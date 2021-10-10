@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class DeckController {
 
+    long id = 1;
+
     @Autowired
     RestTemplate restTemplate;
 
@@ -38,12 +40,22 @@ public class DeckController {
 
     @GetMapping(value = "/getHand")
     public CardDto getHand(){
+
         CardDto handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
-                +deckService.getOne(1)
+                +deckService.getOne(id)
                 .getDeck_id()+"/draw/?count=5", CardDto.class).getBody();
         for(Card card : handCall.getCards()){
             cardsService.save(card);
         }
+        Deck deck = deckService.getOne(id);
+        deck.setRemaining(handCall.getRemaining());
+        deckService.save(deck);
+        log.info("Before the if: "+ deck.getId());
+        if(deckService.getOne(id).getRemaining()<5){
+            getDeck();
+            id=deck.getId();
+        }
+
         return handCall;
 
     }
