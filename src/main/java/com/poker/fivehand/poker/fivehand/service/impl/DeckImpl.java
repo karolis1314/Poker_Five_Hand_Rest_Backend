@@ -21,10 +21,15 @@ public class DeckImpl {
     DeckService deckService;
 
     public DeckDto getDeck(){
-        DeckDto deck = restTemplate.getForEntity(Constants.GET_DECK, DeckDto.class).getBody();
-        Deck deck1 = new Deck();
-        deck1.setDeck_id(deck.getDeck_id());
-        deckService.save(deck1);
-        return deck;
+        try {
+            DeckDto deck = restTemplate.getForEntity(Constants.GET_DECK, DeckDto.class).getBody();
+            Deck deck1 = new Deck();
+            deck1.setDeck_id(deck.getDeck_id());
+            deckService.save(deck1);
+            return deck;
+        }catch (Exception e){
+            log.info(e.getMessage());
+        }
+        return null;
     }
 }

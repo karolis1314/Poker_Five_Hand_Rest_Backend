@@ -27,12 +27,22 @@ public class CardImpl {
     CardsService cardsService;
 
     public CardDto getHand(){
-        CardDto handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
-                +deckService.getOne(id)
-                .getDeck_id()+"/draw/?count=5", CardDto.class).getBody();
-        for(Card card : handCall.getCards()){
-            cardsService.save(card);
+        if(deckService.getOne(id)==null){
+            log.info("No deck yet");
+        }else {
+            try{
+                CardDto handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
+                        + deckService.getOne(id)
+                        .getDeck_id() + "/draw/?count=5", CardDto.class).getBody();
+                for (Card card : handCall.getCards()) {
+                    cardsService.save(card);
+                }
+                return handCall;
+            }catch (Exception e){
+                log.info(e.getMessage());
+            }
+
         }
-        return handCall;
+        return null;
     }
 }
