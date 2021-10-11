@@ -23,12 +23,17 @@ public class DeckController {
 
 
     @GetMapping(value = "/getDeck")
-    public Deck getDeck(){
-       return deck.getDeck();
+    public String getDeck(){
+        if(deck.getDeck()==null){
+            return "No Deck selected yet, please call getDeck for Deck selection.";
+        }
+       return deck.getDeck().toString();
     }
 
     @GetMapping(value = "/getHand")
-    public CardDto getHand(){
-        return card.getHand();
+    public String getHand(){
+        if(card.getHand() == null){
+            return "No Hand made, please get deck than try to get the Hand, call getDeck for deck selection.";
+        }return card.getHand().toString();
     }
 }
