@@ -25,4 +25,9 @@ public class DeckService {
     public Deck getOne(long id){
         return deckRepo.getById(id);
     }
+
+    public int getRemaining(long id){
+        return deckRepo.getById(id).getRemaining();
+    }
+
 }
