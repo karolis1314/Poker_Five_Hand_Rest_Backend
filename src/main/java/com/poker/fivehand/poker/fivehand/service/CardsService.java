@@ -20,4 +20,8 @@ public class CardsService {
     public void save(Card card){
         cardRepo.save(card);
     }
+
+    public Card getOne(Long id){
+        return cardRepo.getById(id);
+    }
 }
