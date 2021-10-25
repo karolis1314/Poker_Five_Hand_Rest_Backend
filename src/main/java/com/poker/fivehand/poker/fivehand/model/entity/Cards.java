@@ -1,6 +1,5 @@
-package com.poker.fivehand.poker.fivehand.model.dto;
+package com.poker.fivehand.poker.fivehand.model.entity;
 
-import com.poker.fivehand.poker.fivehand.model.entity.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardDto {
+public class Cards {
 
     private boolean success;
     private String deck_id;
