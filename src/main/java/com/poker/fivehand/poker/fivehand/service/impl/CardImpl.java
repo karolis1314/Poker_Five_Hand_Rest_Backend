@@ -1,21 +1,19 @@
 package com.poker.fivehand.poker.fivehand.service.impl;
 
 
+import com.poker.fivehand.poker.fivehand.constants.Constants;
 import com.poker.fivehand.poker.fivehand.model.dto.CardDto;
 import com.poker.fivehand.poker.fivehand.model.entity.Card;
-import com.poker.fivehand.poker.fivehand.model.entity.Deck;
 import com.poker.fivehand.poker.fivehand.service.CardsService;
 import com.poker.fivehand.poker.fivehand.service.DeckService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-@Component
+@Service
 public class CardImpl {
-
-    private long id = 1;
 
     @Autowired
     RestTemplate restTemplate;
@@ -26,17 +24,26 @@ public class CardImpl {
     @Autowired
     CardsService cardsService;
 
+    @Autowired
+    DeckImpl deck;
+
+
     public CardDto getHand(){
-        if(deckService.getOne(id)==null){
+        if(deckService.getOne(Constants.ID)==null){
             log.info("No deck yet");
         }else {
             try{
                 CardDto handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
-                        + deckService.getOne(id)
-                        .getDeck_id() + "/draw/?count=5", CardDto.class).getBody();
+                        + deckService.getOne(Constants.ID).getDeck_id() + "/draw/?count=5", CardDto.class).getBody();
                 for (Card card : handCall.getCards()) {
                     cardsService.save(card);
                 }
+                deckService.getOne(Constants.ID).setRemaining(handCall.getRemaining());
+                if(deckService.getOne(Constants.ID).getRemaining()<5){
+                    deck.getDeck();
+                    Constants.ID++;
+                }
+
                 return handCall;
             }catch (Exception e){
                 log.info(e.getMessage());
