@@ -2,8 +2,8 @@ package com.poker.fivehand.poker.fivehand.service.impl;
 
 
 import com.poker.fivehand.poker.fivehand.constants.Constants;
-import com.poker.fivehand.poker.fivehand.model.dto.CardDto;
 import com.poker.fivehand.poker.fivehand.model.entity.Card;
+import com.poker.fivehand.poker.fivehand.model.entity.Cards;
 import com.poker.fivehand.poker.fivehand.service.CardsService;
 import com.poker.fivehand.poker.fivehand.service.DeckService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +28,13 @@ public class CardImpl {
     DeckImpl deck;
 
 
-    public CardDto getHand(){
+    public Cards getHand(){
         if(deckService.getOne(Constants.ID)==null){
             log.info("No deck yet");
         }else {
             try{
-                CardDto handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
-                        + deckService.getOne(Constants.ID).getDeck_id() + "/draw/?count=5", CardDto.class).getBody();
+                Cards handCall = restTemplate.getForEntity("https://deckofcardsapi.com/api/deck/"
+                        + deckService.getOne(Constants.ID).getDeck_id() + "/draw/?count=5", Cards.class).getBody();
                 for (Card card : handCall.getCards()) {
                     cardsService.save(card);
                 }
@@ -43,12 +43,10 @@ public class CardImpl {
                     deck.getDeck();
                     Constants.ID++;
                 }
-
                 return handCall;
             }catch (Exception e){
                 log.info(e.getMessage());
             }
-
         }
         return null;
     }
