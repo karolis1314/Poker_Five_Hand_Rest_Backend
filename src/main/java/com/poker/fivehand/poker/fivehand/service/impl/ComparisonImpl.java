@@ -26,7 +26,7 @@ public class ComparisonImpl {
 
         List<Card> list = new ArrayList<>();
 
-        while( Constants.PLAYER_ONE_ID != 6) {
+        while( Constants.PLAYER_ONE_ID != Constants.PLAYER_TWO_ID) {
             list.add(cardsService.getOne(Constants.PLAYER_ONE_ID));
             Constants.PLAYER_ONE_ID ++;
         }
@@ -39,10 +39,11 @@ public class ComparisonImpl {
 
         List<Card> list = new ArrayList<>();
 
-        while( Constants.PLAYER_TWO_ID != 11) {
+        while( Constants.PLAYER_TWO_ID != Constants.LIMIT_PLAYER_DRAW) {
             list.add(cardsService.getOne(Constants.PLAYER_TWO_ID));
             Constants.PLAYER_TWO_ID ++;
         }
+        Constants.LIMIT_PLAYER_DRAW += 5;
 
         playerHand.setHand(list);
         return playerHand;

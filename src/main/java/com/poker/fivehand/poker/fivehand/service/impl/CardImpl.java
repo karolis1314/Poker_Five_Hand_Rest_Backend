@@ -42,6 +42,9 @@ public class CardImpl {
                 if(deckService.getOne(Constants.ID).getRemaining()<5){
                     deck.getDeck();
                     Constants.ID++;
+                    Constants.PLAYER_ONE_ID = 1;
+                    Constants.PLAYER_TWO_ID = 6;
+                    Constants.LIMIT_PLAYER_DRAW = 11;
                 }
                 return handCall;
             }catch (Exception e){

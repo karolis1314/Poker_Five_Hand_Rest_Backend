@@ -5,4 +5,6 @@ public class Constants {
     public static long ID = 1; // Changing due to db
     public static long PLAYER_ONE_ID = 1;
     public static long PLAYER_TWO_ID = 6;
+    public static long LIMIT_PLAYER_DRAW = 11;
+
 }
